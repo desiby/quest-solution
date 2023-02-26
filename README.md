@@ -1,7 +1,7 @@
 ## This is a deployment solution to Rearc's "Quest" application
 
 ### Architecture:
- The app is packaged into a container, pushed into dockerhub registry then deploy on AWS ECS Fargate.
+ The app was packaged locally into a docker image, pushed into a dockerhub registry then deployed on AWS ECS Fargate.
  An application load balancer is registered to the ECS Service with the service endpoint URL available to end-users.
 
 ![alt architecture](img/architecture.png)
@@ -9,7 +9,7 @@
 ### Prerequisites to deploy the stack:
  - an AWS account
  - Terraform CLI v1.2 or latest
- - AWS CLI v2.0 or lastest
+ - AWS CLI v2.0 or latest
 
 ### How to deploy:
 
