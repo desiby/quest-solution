@@ -1,5 +1,5 @@
-resource "aws_security_group" "allow_http" {
-  name        = "allow-http-quest-${terraform.workspace}"
+resource "aws_security_group" "alb_sg" {
+  name        = "alb-quest-sg-${terraform.workspace}"
   description = "Allow http traffic to lb"
   vpc_id      = module.vpc.vpc_id
 
@@ -44,7 +44,7 @@ resource "aws_lb" "quest_alb" {
     module.vpc.public_subnets[0],
     module.vpc.public_subnets[1]
   ]
-  security_groups = [aws_security_group.allow_http.id]
+  security_groups = [aws_security_group.alb_sg.id]
 }
 
 resource "aws_lb_listener" "quest_lb_listener" {

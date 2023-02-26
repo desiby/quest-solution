@@ -1,14 +1,14 @@
-resource "aws_security_group" "allow_inbound" {
+resource "aws_security_group" "ecs_service_sg" {
   name        = "allow-inbound-quest-${terraform.workspace}"
-  description = "Allow custom tcp traffic to service"
+  description = "Allow custom tcp traffic to service from alb"
   vpc_id      = module.vpc.vpc_id
 
   ingress {
-    description      = "allow http"
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    cidr_blocks      = ["0.0.0.0/0"]
+    description      = "allow inbound from alb"
+    from_port        = 3000
+    to_port          = 3000
+    protocol         = "tcp"
+    security_groups = [aws_security_group.alb_sg.id]
   }
 
   egress {
@@ -65,7 +65,7 @@ resource "aws_ecs_service" "quest_service" {
 
   network_configuration {
     subnets = [module.vpc.public_subnets[0], module.vpc.public_subnets[1]]
-    security_groups = [aws_security_group.allow_inbound.id]
+    security_groups = [aws_security_group.ecs_service_sg.id]
     assign_public_ip = true
   }
 
